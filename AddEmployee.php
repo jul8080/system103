@@ -36,7 +36,9 @@ include 'SaveEmp.php'
         
      
         <input type="submit" name="saverec" id="submit" value="Save Record"><br>
-        <input type="submit" name="searchUser" id="submit" value="Search Record"><br>
+        <input type="submit" name="searchrec" id="submit" value="Search Record"><br>
+        <input type="submit" name="deleterec" id="submit" value="Delete Record"><br>
+        <input type="submit" name="updaterec" id="submit" value="Update Record"><br>
         <input type="submit" name="cls" id="submit" value="Clear Form"><br>
 
     </fieldset>

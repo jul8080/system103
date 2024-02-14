@@ -7,17 +7,7 @@ $lname = "";
 $D_id = "";
 $rankcode = "";
 $messAlert = "";
-function getInfo()
-{
-  $search = array();
-  $search[0] = $_POST['EmpID'];
-  $search[1] = $_POST['fname'];
-  $search[2] = $_POST['mname'];
-  $search[3] = $_POST['lname'];
-  $search[4] = $_POST['D_id'];
-  $search[5] = $_POST['rankcode'];
-  return $search;
-}
+
 if (isset($_POST["saverec"])) {
   $pempID = $_POST["EmpID"];
   $pfn = $_POST["fname"];
@@ -36,9 +26,38 @@ VALUES ('$pempID', '$pfn', '$pmn','$plastn','$pD_id','$pRC')";
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
 }
-if (isset($_POST['searchUser'])) {
-  $dataSeach = getInfo();
-  $sql = "SELECT * FROM employee where TEmpID='$dataSeach[0]'";
+if (isset($_POST["updaterec"])) {
+  $pempID = $_POST["EmpID"];
+  $pfn = $_POST["fname"];
+  $pmn = $_POST["mname"];
+  $plastn = $_POST["lname"];
+  $pD_id = $_POST["D_id"];
+  $pRC = $_POST["rankcode"];
+
+  $sql = "UPDATE employee SET TEmpID='$pempID',Tfn='$pfn ',Tmn='$pmn',Tln='$plastn',TdeptID='$pD_id',Trankcode='$pRC' WHERE TEmpID='$pempID'";
+
+  if ($conn->query($sql) === TRUE) {
+
+    $messAlert = "<script>alert('Record Successfully Updated...')</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+}
+if (isset($_POST["deleterec"])) {
+  $pempID = $_POST["EmpID"];
+
+  $sql = "DELETE FROM employee WHERE TEmpID = $pempID";
+
+  if ($conn->query($sql) === TRUE) {
+
+    $messAlert = "<script>alert('Record Successfully Deleted...')</script>";
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+}
+if (isset($_POST['searchrec'])) {
+  $pempID = $_POST["EmpID"];;
+  $sql = "SELECT * FROM employee where TEmpID='$pempID'";
   $result = mysqli_query($conn, $sql);
 
   if ($result) {
@@ -53,10 +72,10 @@ if (isset($_POST['searchUser'])) {
         $rankcode = $row['Trankcode'];
       }
     } else {
-      echo "No data found!";
+      $messAlert = "No data found!";
     }
   } else {
-    echo "Something went wrong!";
+    $messAlert = "Something went wrong!";
   }
 }
 
